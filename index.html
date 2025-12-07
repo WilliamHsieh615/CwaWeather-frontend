@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -12,360 +11,284 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        :root {
+        :root{
             --pulse-blue: #4FB5D9;
             --pulse-deep: #2C87B0;
             --mist-white: #FFFEF2;
             --sun-yellow: #F9F195;
             --calm-green: #8FD8AF;
             --muted-brown: #58504A;
-            --card-border: rgba(255, 255, 255, 0.9);
-            --glass: rgba(255, 255, 255, 0.06);
-            --glass-strong: rgba(255, 255, 255, 0.12);
+            --card-border: rgba(255,255,255,0.9);
+            --glass: rgba(255,255,255,0.06);
+            --glass-strong: rgba(255,255,255,0.12);
             --bg: linear-gradient(180deg, #E8F8FF 0%, #F2FCFF 35%, #EAF8FF 100%);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent
-        }
-
-        html,
-        body {
-            height: 100%
-        }
-
-        body {
+        *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+        html,body{height:100%}
+        body{
             font-family: "Inter", system-ui, -apple-system, "Helvetica Neue", Arial;
             background: var(--bg);
             color: var(--muted-brown);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            padding-bottom: 28px;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            overflow-x:hidden;
+            padding-bottom:28px;
         }
 
         /* layout container */
-        .viewport {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 18px;
+        .viewport{
+            max-width:760px;
+            margin:0 auto;
+            padding:18px;
         }
 
         /* header / brand */
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 12px 6px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+        .topbar{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+            padding:12px 6px;
+            position:sticky;
+            top:0;
+            z-index:50;
+            background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
             backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            border-bottom:1px solid rgba(255,255,255,0.6);
         }
 
-        .brand {
-            display: flex;
-            gap: 12px;
-            align-items: center;
+        .brand{
+            display:flex;
+            gap:12px;
+            align-items:center;
         }
 
-        .logo {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
+        .logo{
+            width:44px;
+            height:44px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:10px;
             background: linear-gradient(135deg, var(--pulse-blue), var(--pulse-deep));
-            box-shadow: 0 6px 18px rgba(46, 138, 176, 0.18), inset 0 -4px 8px rgba(255, 255, 255, 0.06);
-            color: white;
-            font-weight: 800;
-            font-size: 18px;
+            box-shadow: 0 6px 18px rgba(46,138,176,0.18), inset 0 -4px 8px rgba(255,255,255,0.06);
+            color:white;
+            font-weight:800;
+            font-size:18px;
         }
 
-        .brand-title {
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
+        .brand-title{
+            display:flex;
+            flex-direction:column;
+            line-height:1;
         }
 
-        .brand-title .name {
-            font-weight: 700;
-            color: var(--pulse-deep);
-            letter-spacing: 0.4px;
-            font-size: 1.05rem;
+        .brand-title .name{
+            font-weight:700;
+            color:var(--pulse-deep);
+            letter-spacing:0.4px;
+            font-size:1.05rem;
         }
 
-        .brand-title .tag {
-            font-size: 0.72rem;
-            color: var(--pulse-deep);
-            opacity: 0.75;
+        .brand-title .tag{
+            font-size:0.72rem;
+            color:var(--pulse-deep);
+            opacity:0.75;
         }
 
-        .update-pill {
-            font-size: 0.82rem;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
-            padding: 6px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: var(--pulse-deep);
-            font-weight: 600;
-            box-shadow: 0 2px 6px rgba(44, 135, 176, 0.08);
+        .update-pill{
+            font-size:0.82rem;
+            background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+            padding:6px 10px;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,0.4);
+            color:var(--pulse-deep);
+            font-weight:600;
+            box-shadow: 0 2px 6px rgba(44,135,176,0.08);
         }
 
         /* hero */
-        .hero-card {
-            margin-top: 18px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.90));
-            border-radius: 22px;
-            padding: 22px;
-            position: relative;
-            overflow: visible;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 30px rgba(46, 138, 176, 0.07);
+        .hero-card{
+            margin-top:18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.90));
+            border-radius:22px;
+            padding:22px;
+            position:relative;
+            overflow:visible;
+            border:1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(46,138,176,0.07);
         }
 
         /* pulse decorative wave */
         .pulse-wave {
-            position: absolute;
-            left: 20px;
-            right: 20px;
-            bottom: -18px;
-            height: 60px;
-            border-radius: 20px;
-            background: linear-gradient(90deg, rgba(79, 181, 217, 0.12), rgba(79, 181, 217, 0.06));
+            position:absolute;
+            left:20px;
+            right:20px;
+            bottom:-18px;
+            height:60px;
+            border-radius:20px;
+            background: linear-gradient(90deg, rgba(79,181,217,0.12), rgba(79,181,217,0.06));
             filter: blur(10px);
-            transform-origin: center;
+            transform-origin:center;
             animation: gentleFloat var(--pulse-speed, 3.2s) ease-in-out infinite;
-            z-index: 1;
+            z-index:1;
         }
 
-        @keyframes gentleFloat {
-            0% {
-                transform: translateY(0) scaleY(0.98)
-            }
-
-            50% {
-                transform: translateY(-6px) scaleY(1.05)
-            }
-
-            100% {
-                transform: translateY(0) scaleY(0.98)
-            }
+        @keyframes gentleFloat{
+            0%{transform: translateY(0) scaleY(0.98)}
+            50%{transform: translateY(-6px) scaleY(1.05)}
+            100%{transform: translateY(0) scaleY(0.98)}
         }
 
-        .hero-head {
-            position: relative;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
+        .hero-head{
+            position:relative;
+            z-index:3;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:18px;
         }
 
-        .hero-left {
-            text-align: left;
+        .hero-left{
+            text-align:left;
         }
 
-        .city {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--pulse-deep);
+        .city{
+            font-size:1.15rem;
+            font-weight:800;
+            color:var(--pulse-deep);
         }
 
-        .slogan {
-            font-size: 0.82rem;
-            color: var(--pulse-deep);
-            opacity: 0.8;
-            margin-top: 4px;
-            font-weight: 600;
+        .slogan{
+            font-size:0.82rem;
+            color:var(--pulse-deep);
+            opacity:0.8;
+            margin-top:4px;
+            font-weight:600;
         }
 
-        .hero-right {
-            display: flex;
-            align-items: center;
-            gap: 14px;
+        .hero-right{
+            display:flex;
+            align-items:center;
+            gap:14px;
         }
 
         .hero-temp {
-            font-size: 3.6rem;
-            font-weight: 800;
-            color: var(--pulse-deep);
-            line-height: 1;
+            font-size:3.6rem;
+            font-weight:800;
+            color:var(--pulse-deep);
+            line-height:1;
         }
 
         .hero-icon {
-            font-size: 3.6rem;
-            filter: drop-shadow(0 6px 6px rgba(46, 138, 176, 0.08));
-            margin-right: 8px;
+            font-size:3.6rem;
+            filter: drop-shadow(0 6px 6px rgba(46,138,176,0.08));
+            margin-right:8px;
             animation: iconPulse 3s infinite ease-in-out;
         }
-
-        @keyframes iconPulse {
-            0% {
-                transform: translateY(0)
-            }
-
-            50% {
-                transform: translateY(-6px)
-            }
-
-            100% {
-                transform: translateY(0)
-            }
+        @keyframes iconPulse{
+            0%{transform: translateY(0)}
+            50%{transform: translateY(-6px)}
+            100%{transform: translateY(0)}
         }
 
-        .hero-desc {
-            margin-top: 8px;
-            font-size: 1.05rem;
+        .hero-desc{
+            margin-top:8px;
+            font-size:1.05rem;
             color: #6a5f59;
-            font-weight: 600;
+            font-weight:600;
         }
 
         /* small stats row */
-        .mini-stats {
-            margin-top: 14px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: space-between;
+        .mini-stats{
+            margin-top:14px;
+            display:flex;
+            gap:10px;
+            align-items:center;
+            justify-content:space-between;
         }
 
-        .stat {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.85));
-            padding: 8px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            min-width: 32%;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.92rem;
-            color: var(--pulse-deep);
+        .stat{
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+            padding:8px 12px;
+            border-radius:12px;
+            border:1px solid rgba(255,255,255,0.7);
+            min-width:32%;
+            text-align:center;
+            font-weight:600;
+            font-size:0.92rem;
+            color:var(--pulse-deep);
         }
 
         /* advice grid */
-        .advice-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 16px;
+        .advice-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:12px;
+            margin-top:16px;
         }
 
-        .advice-item {
-            background: linear-gradient(180deg, rgba(79, 181, 217, 0.06), rgba(79, 181, 217, 0.03));
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(79, 181, 217, 0.08);
+        .advice-item{
+            background: linear-gradient(180deg, rgba(79,181,217,0.06), rgba(79,181,217,0.03));
+            padding:12px;
+            border-radius:12px;
+            text-align:center;
+            border:1px solid rgba(79,181,217,0.08);
         }
 
-        .advice-icon {
-            font-size: 1.6rem
-        }
-
-        .advice-text {
-            font-weight: 700;
-            margin-top: 6px;
-            color: var(--pulse-deep)
-        }
+        .advice-icon{font-size:1.6rem}
+        .advice-text{font-weight:700;margin-top:6px;color:var(--pulse-deep)}
 
         /* forecast scroll */
-        .section-title {
-            font-size: 1.05rem;
-            color: var(--pulse-deep);
-            font-weight: 800;
-            margin: 22px 6px 10px 6px;
+        .section-title{
+            font-size:1.05rem;
+            color:var(--pulse-deep);
+            font-weight:800;
+            margin:22px 6px 10px 6px;
         }
 
-        .scroll-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 12px;
-            padding: 10px 6px 20px 6px;
-            scrollbar-width: none;
+        .scroll-container{
+            display:flex;
+            overflow-x:auto;
+            gap:12px;
+            padding:10px 6px 20px 6px;
+            scrollbar-width:none;
+        }
+        .scroll-container::-webkit-scrollbar{display:none}
+
+        .mini-card{
+            min-width:140px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+            border-radius:14px;
+            padding:12px;
+            text-align:center;
+            border:1px solid rgba(255,255,255,0.85);
+            box-shadow:0 6px 18px rgba(46,138,176,0.04);
+            flex-shrink:0;
         }
 
-        .scroll-container::-webkit-scrollbar {
-            display: none
-        }
-
-        .mini-card {
-            min-width: 140px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
-            border-radius: 14px;
-            padding: 12px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.85);
-            box-shadow: 0 6px 18px rgba(46, 138, 176, 0.04);
-            flex-shrink: 0;
-        }
-
-        .mini-time {
-            font-weight: 800;
-            color: var(--pulse-deep);
-            font-size: 0.88rem
-        }
-
-        .mini-icon {
-            font-size: 1.8rem;
-            margin: 6px 0
-        }
-
-        .mini-temp {
-            font-weight: 800;
-            color: #53483f
-        }
+        .mini-time{font-weight:800;color:var(--pulse-deep);font-size:0.88rem}
+        .mini-icon{font-size:1.8rem;margin:6px 0}
+        .mini-temp{font-weight:800;color:#53483f}
 
         /* loading screen */
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(180deg, rgba(79, 181, 217, 0.06), rgba(79, 181, 217, 0.02));
-            z-index: 9999;
+        .loading-screen{
+            position:fixed;inset:0;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            background: linear-gradient(180deg, rgba(79,181,217,0.06), rgba(79,181,217,0.02));
+            z-index:9999;
         }
-
-        .loading-emoji {
-            font-size: 4.2rem;
-            animation: loadBounce 1.6s infinite;
-        }
-
-        @keyframes loadBounce {
-            0% {
-                transform: translateY(0)
-            }
-
-            50% {
-                transform: translateY(-8px)
-            }
-
-            100% {
-                transform: translateY(0)
-            }
-        }
+        .loading-emoji{font-size:4.2rem; animation: loadBounce 1.6s infinite;}
+        @keyframes loadBounce{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
 
         /* responsive tweaks */
-        @media (max-width:420px) {
-            .hero-temp {
-                font-size: 2.6rem
-            }
-
-            .hero-icon {
-                font-size: 2.6rem
-            }
+        @media (max-width:420px){
+            .hero-temp{font-size:2.6rem}
+            .hero-icon{font-size:2.6rem}
         }
     </style>
 </head>
-
 <body>
     <div id="loading" class="loading-screen">
         <div class="loading-emoji">🌤️</div>
@@ -396,73 +319,73 @@
     </main>
 
     <script>
-        const API_URL = "https://william-weather-website.zeabur.app/api/weather/kaohsiung";
+const API_URL = "https://william-weather-website.zeabur.app/api/weather/kaohsiung";
 
-        /* 取得天氣圖示 */
-        function getWeatherIcon(weather) {
-            if (!weather) return "🌤️";
-            if (weather.includes("晴")) return "☀️";
-            if (weather.includes("多雲")) return "⛅";
-            if (weather.includes("陰")) return "☁️";
-            if (weather.includes("雨")) return "🌧️";
-            if (weather.includes("雷")) return "⛈️";
-            return "🌤️";
-        }
+/* 取得天氣圖示 */
+function getWeatherIcon(weather) {
+    if (!weather) return "🌤️";
+    if (weather.includes("晴")) return "☀️";
+    if (weather.includes("多雲")) return "⛅";
+    if (weather.includes("陰")) return "☁️";
+    if (weather.includes("雨")) return "🌧️";
+    if (weather.includes("雷")) return "⛈️";
+    return "🌤️";
+}
 
-        /* SkyPulse — 天氣建議 */
-        function getAdvice(rainProb, maxTemp) {
-            let rainIcon = "🌂";
-            let rainText = "不用帶傘";
-            if (parseInt(rainProb) > 30) {
-                rainIcon = "☂️";
-                rainText = "記得帶傘";
-            }
+/* SkyPulse — 天氣建議 */
+function getAdvice(rainProb, maxTemp) {
+    let rainIcon = "🌂";
+    let rainText = "不用帶傘";
+    if (parseInt(rainProb) > 30) {
+        rainIcon = "☂️";
+        rainText = "記得帶傘";
+    }
 
-            let clothIcon = "👕";
-            let clothText = "舒適穿搭";
-            if (parseInt(maxTemp) >= 28) {
-                clothIcon = "🎽";
-                clothText = "短袖就好";
-            } else if (parseInt(maxTemp) <= 20) {
-                clothIcon = "🧥";
-                clothText = "建議加件外套";
-            }
+    let clothIcon = "👕";
+    let clothText = "舒適穿搭";
+    if (parseInt(maxTemp) >= 28) {
+        clothIcon = "🎽";
+        clothText = "短袖就好";
+    } else if (parseInt(maxTemp) <= 20) {
+        clothIcon = "🧥";
+        clothText = "建議加件外套";
+    }
 
-            return { rainIcon, rainText, clothIcon, clothText };
-        }
+    return { rainIcon, rainText, clothIcon, clothText };
+}
 
-        /* 時段文字 */
-        function getTimePeriod(startTime) {
-            const hour = new Date(startTime).getHours();
-            if (hour >= 5 && hour < 11) return "早晨";
-            if (hour >= 11 && hour < 14) return "中午";
-            if (hour >= 14 && hour < 18) return "下午";
-            if (hour >= 18 && hour < 23) return "晚上";
-            return "深夜";
-        }
+/* 時段文字 */
+function getTimePeriod(startTime) {
+    const hour = new Date(startTime).getHours();
+    if (hour >= 5 && hour < 11) return "早晨";
+    if (hour >= 11 && hour < 14) return "中午";
+    if (hour >= 14 && hour < 18) return "下午";
+    if (hour >= 18 && hour < 23) return "晚上";
+    return "深夜";
+}
 
-        /* SkyPulse — 根據天氣改變脈動速度 */
-        function setPulseSpeed(rainProb, maxTemp) {
-            const wave = document.getElementById("pulseWave");
-            let speed = 3.2;
+/* SkyPulse — 根據天氣改變脈動速度 */
+function setPulseSpeed(rainProb, maxTemp) {
+    const wave = document.getElementById("pulseWave");
+    let speed = 3.2;
 
-            if (rainProb >= 50) speed -= 0.6;
-            if (rainProb >= 80) speed -= 0.8;
+    if (rainProb >= 50) speed -= 0.6;
+    if (rainProb >= 80) speed -= 0.8;
 
-            if (maxTemp >= 32) speed -= 0.4;
-            if (maxTemp <= 15) speed += 0.5;
+    if (maxTemp >= 32) speed -= 0.4;
+    if (maxTemp <= 15) speed += 0.5;
 
-            if (speed < 1.6) speed = 1.6;
-            if (speed > 4.2) speed = 4.2;
+    if (speed < 1.6) speed = 1.6;
+    if (speed > 4.2) speed = 4.2;
 
-            wave.style.setProperty("--pulse-speed", speed + "s");
-        }
+    wave.style.setProperty("--pulse-speed", speed + "s");
+}
 
-        /* 填 hero 區塊 */
-        function renderHero(data) {
-            const hero = document.getElementById("heroCard");
+/* 填 hero 區塊 */
+function renderHero(data) {
+    const hero = document.getElementById("heroCard");
 
-            hero.innerHTML = `
+    hero.innerHTML = `
         <div class="pulse-wave" id="pulseWave"></div>
         <div class="hero-head">
             <div class="hero-left">
@@ -485,8 +408,8 @@
 
         <div class="advice-grid">
             ${(() => {
-                    const a = getAdvice(data.rainProb, data.maxTemp);
-                    return `
+                const a = getAdvice(data.rainProb, data.maxTemp);
+                return `
                     <div class="advice-item">
                         <div class="advice-icon">${a.rainIcon}</div>
                         <div class="advice-text">${a.rainText}</div>
@@ -496,58 +419,57 @@
                         <div class="advice-text">${a.clothText}</div>
                     </div>
                 `;
-                })()}
+            })()}
         </div>
     `;
 
-            setPulseSpeed(data.rainProb, data.maxTemp);
-        }
+    setPulseSpeed(data.rainProb, data.maxTemp);
+}
 
-        /* 渲染稍後預報 */
-        function renderFuture(futures) {
-            const container = document.getElementById("futureForecasts");
-            container.innerHTML = "";
+/* 渲染稍後預報 */
+function renderFuture(futures) {
+    const container = document.getElementById("futureForecasts");
+    container.innerHTML = "";
 
-            futures.forEach(f => {
-                container.innerHTML += `
+    futures.forEach(f => {
+        container.innerHTML += `
             <div class="mini-card">
                 <div class="mini-time">${getTimePeriod(f.startTime)}</div>
                 <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
                 <div class="mini-temp">${f.minTemp}° / ${f.maxTemp}°</div>
             </div>
         `;
-            });
-        }
+    });
+}
 
-        /* 載入資料 */
-        async function loadWeather() {
-            try {
-                const res = await fetch(API_URL);
-                const json = await res.json();
+/* 載入資料 */
+async function loadWeather() {
+    try {
+        const res = await fetch(API_URL);
+        const json = await res.json();
 
-                renderHero(json.current);
-                renderFuture(json.future);
+        renderHero(json.current);
+        renderFuture(json.future);
 
-                document.getElementById("updateTime").innerText = "更新：" + json.current.time;
+        document.getElementById("updateTime").innerText = "更新：" + json.current.time;
 
-                // 淡出 loading
-                setTimeout(() => {
-                    document.getElementById("loading").style.opacity = 0;
-                    setTimeout(() => {
-                        document.getElementById("loading").style.display = "none";
-                        document.getElementById("mainContent").style.display = "block";
-                    }, 400);
-                }, 600);
+        // 淡出 loading
+        setTimeout(() => {
+            document.getElementById("loading").style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            }, 400);
+        }, 600);
 
-            } catch (e) {
-                console.error("Weather API 錯誤：", e);
-                document.getElementById("updateTime").innerText = "更新失敗";
-            }
-        }
+    } catch (e) {
+        console.error("Weather API 錯誤：", e);
+        document.getElementById("updateTime").innerText = "更新失敗";
+    }
+}
 
-        loadWeather();
-    </script>
+loadWeather();
+</script>
 
 </body>
-
 </html>
