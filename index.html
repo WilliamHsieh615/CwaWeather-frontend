@@ -319,157 +319,175 @@
     </main>
 
     <script>
-const API_URL = "https://william-weather-website.zeabur.app/api/weather/kaohsiung";
+        // (保留你原本的 API 路徑，若要改成其他縣市可在這裡更新)
+        const API_URL = "https://william-weather-website.zeabur.app/api/weather/kaohsiung";
 
-/* 取得天氣圖示 */
-function getWeatherIcon(weather) {
-    if (!weather) return "🌤️";
-    if (weather.includes("晴")) return "☀️";
-    if (weather.includes("多雲")) return "⛅";
-    if (weather.includes("陰")) return "☁️";
-    if (weather.includes("雨")) return "🌧️";
-    if (weather.includes("雷")) return "⛈️";
-    return "🌤️";
-}
+        function getWeatherIcon(weather) {
+            if (!weather) return "🌤️";
+            if (weather.includes("晴")) return "☀️";
+            if (weather.includes("多雲")) return "⛅";
+            if (weather.includes("陰")) return "☁️";
+            if (weather.includes("雨")) return "🌧️";
+            if (weather.includes("雷")) return "⛈️";
+            return "🌤️";
+        }
 
-/* SkyPulse — 天氣建議 */
-function getAdvice(rainProb, maxTemp) {
-    let rainIcon = "🌂";
-    let rainText = "不用帶傘";
-    if (parseInt(rainProb) > 30) {
-        rainIcon = "☂️";
-        rainText = "記得帶傘";
-    }
+        function getAdvice(rainProb, maxTemp) {
+            let rainIcon = "🌂";
+            let rainText = "不用帶傘";
+            if (parseInt(rainProb) > 30) {
+                rainIcon = "☂️";
+                rainText = "記得帶傘";
+            }
 
-    let clothIcon = "👕";
-    let clothText = "舒適穿搭";
-    if (parseInt(maxTemp) >= 28) {
-        clothIcon = "🎽";
-        clothText = "短袖就好";
-    } else if (parseInt(maxTemp) <= 20) {
-        clothIcon = "🧥";
-        clothText = "建議加件外套";
-    }
+            let clothIcon = "👕";
+            let clothText = "舒適穿搭";
+            if (parseInt(maxTemp) >= 28) {
+                clothIcon = "🎽";
+                clothText = "短袖就好";
+            } else if (parseInt(maxTemp) <= 20) {
+                clothIcon = "🧥";
+                clothText = "建議加件外套";
+            }
 
-    return { rainIcon, rainText, clothIcon, clothText };
-}
+            return { rainIcon, rainText, clothIcon, clothText };
+        }
 
-/* 時段文字 */
-function getTimePeriod(startTime) {
-    const hour = new Date(startTime).getHours();
-    if (hour >= 5 && hour < 11) return "早晨";
-    if (hour >= 11 && hour < 14) return "中午";
-    if (hour >= 14 && hour < 18) return "下午";
-    if (hour >= 18 && hour < 23) return "晚上";
-    return "深夜";
-}
+        function getTimePeriod(startTime) {
+            const hour = new Date(startTime).getHours();
+            if (hour >= 5 && hour < 11) return "早晨";
+            if (hour >= 11 && hour < 14) return "中午";
+            if (hour >= 14 && hour < 18) return "下午";
+            if (hour >= 18 && hour < 23) return "晚上";
+            return "深夜";
+        }
 
-/* SkyPulse — 根據天氣改變脈動速度 */
-function setPulseSpeed(rainProb, maxTemp) {
-    const wave = document.getElementById("pulseWave");
-    let speed = 3.2;
+        // 將脈動動畫速度根據天氣動態調整（越激烈的天氣脈動越快）
+        function setPulseSpeed(rainProb, maxTemp) {
+            const wave = document.getElementById("pulseWave");
+            // base speed 3.2s, 如果有高降雨或極端溫度加快節奏
+            let speed = 3.2;
+            const rain = parseInt(rainProb);
+            const t = parseInt(maxTemp);
 
-    if (rainProb >= 50) speed -= 0.6;
-    if (rainProb >= 80) speed -= 0.8;
+            if (!isNaN(rain) && rain > 60) speed = 1.6;
+            else if (!isNaN(rain) && rain > 30) speed = 2.4;
 
-    if (maxTemp >= 32) speed -= 0.4;
-    if (maxTemp <= 15) speed += 0.5;
+            // 溫度極高也可加快感覺
+            if (!isNaN(t) && t >= 34) speed = Math.min(speed, 1.8);
 
-    if (speed < 1.6) speed = 1.6;
-    if (speed > 4.2) speed = 4.2;
+            wave.style.setProperty("--pulse-speed", speed + "s");
+        }
 
-    wave.style.setProperty("--pulse-speed", speed + "s");
-}
+        function renderWeather(data) {
+            const forecasts = data.forecasts;
+            if (!Array.isArray(forecasts) || forecasts.length === 0) {
+                alert("SkyPulse：沒有可用的預報資料");
+                return;
+            }
 
-/* 填 hero 區塊 */
-function renderHero(data) {
-    const hero = document.getElementById("heroCard");
+            const current = forecasts[0];
+            const others = forecasts.slice(1);
+            const avgTemp = Math.round((parseInt(current.maxTemp) + parseInt(current.minTemp)) / 2);
+            const period = getTimePeriod(current.startTime);
+            const advice = getAdvice(current.rain, current.maxTemp);
 
-    hero.innerHTML = `
-        <div class="pulse-wave" id="pulseWave"></div>
-        <div class="hero-head">
-            <div class="hero-left">
-                <div class="city">${data.location}</div>
-                <div class="slogan">SkyPulse · 天空的脈動</div>
-            </div>
-            <div class="hero-right">
-                <div class="hero-icon">${getWeatherIcon(data.weather)}</div>
-                <div class="hero-temp">${data.temperature}°</div>
-            </div>
-        </div>
+            setPulseSpeed(current.rain, current.maxTemp);
 
-        <div class="hero-desc">${data.weather}</div>
+            // Hero HTML
+            const heroHTML = `
+                <div class="hero-head">
+                    <div class="hero-left">
+                        <div class="city">📍 南投</div>
+                        <div class="slogan">SkyPulse — ${period} 的節奏</div>
+                    </div>
+                    <div class="hero-right">
+                        <div style="display:flex;align-items:center;">
+                            <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
+                            <div class="hero-temp">${avgTemp}°</div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="mini-stats">
-            <div class="stat">🌡️ 最高 ${data.maxTemp}°</div>
-            <div class="stat">💧 降雨 ${data.rainProb}%</div>
-            <div class="stat">🌬️ 風速 ${data.wind} m/s</div>
-        </div>
+                <div class="hero-desc">${current.weather} · 最高 ${current.maxTemp}° · 最低 ${current.minTemp}°</div>
 
-        <div class="advice-grid">
-            ${(() => {
-                const a = getAdvice(data.rainProb, data.maxTemp);
-                return `
+                <div class="mini-stats">
+                    <div class="stat">💧 降雨率 <div style="font-size:0.95rem;margin-top:4px">${current.rain}</div></div>
+                    <div class="stat">🌬️ 風向/風速 <div style="font-size:0.95rem;margin-top:4px">${current.wind || "—"}</div></div>
+                    <div class="stat">🔍 氣象說明 <div style="font-size:0.85rem;margin-top:4px">${(current.note || "").slice(0,30) || "無"}</div></div>
+                </div>
+
+                <div class="advice-grid">
                     <div class="advice-item">
-                        <div class="advice-icon">${a.rainIcon}</div>
-                        <div class="advice-text">${a.rainText}</div>
+                        <div class="advice-icon">${advice.rainIcon}</div>
+                        <div class="advice-text">${advice.rainText}</div>
+                        <div style="font-size:0.75rem;color:#6b6b6b;margin-top:6px">降雨率：${current.rain}</div>
                     </div>
                     <div class="advice-item">
-                        <div class="advice-icon">${a.clothIcon}</div>
-                        <div class="advice-text">${a.clothText}</div>
+                        <div class="advice-icon">${advice.clothIcon}</div>
+                        <div class="advice-text">${advice.clothText}</div>
+                        <div style="font-size:0.75rem;color:#6b6b6b;margin-top:6px">最高溫：${current.maxTemp}°</div>
                     </div>
+                </div>
+            `;
+
+            document.getElementById('heroCard').insertAdjacentHTML('beforeend', heroHTML);
+
+            // render future forecasts
+            const scrollContainer = document.getElementById('futureForecasts');
+            scrollContainer.innerHTML = '';
+
+            const todayDate = new Date().getDate();
+
+            others.forEach(f => {
+                let p = getTimePeriod(f.startTime);
+                const fDate = new Date(f.startTime);
+                if (fDate.getDate() !== todayDate) {
+                    p = "明天 " + p;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'mini-card';
+                card.innerHTML = `
+                    <div class="mini-time">${p}</div>
+                    <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
+                    <div class="mini-temp">${f.minTemp}° - ${f.maxTemp}°</div>
+                    <div style="font-size:0.8rem;color:#6b6b6b;margin-top:6px">💧 ${f.rain}</div>
                 `;
-            })()}
-        </div>
-    `;
+                scrollContainer.appendChild(card);
+            });
 
-    setPulseSpeed(data.rainProb, data.maxTemp);
-}
+            // update top-right date label
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            const date = now.getDate();
+            const dayIndex = now.getDay();
+            const days = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
+            document.getElementById('updateTime').textContent = `${month}月${date}日 ${days[dayIndex]}`;
+        }
 
-/* 渲染稍後預報 */
-function renderFuture(futures) {
-    const container = document.getElementById("futureForecasts");
-    container.innerHTML = "";
+        async function fetchWeather() {
+            try {
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 900)); // 輕微等待感
+                const fetchPromise = fetch(API_URL).then(res => res.json());
+                const [_, json] = await Promise.all([delayPromise, fetchPromise]);
 
-    futures.forEach(f => {
-        container.innerHTML += `
-            <div class="mini-card">
-                <div class="mini-time">${getTimePeriod(f.startTime)}</div>
-                <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
-                <div class="mini-temp">${f.minTemp}° / ${f.maxTemp}°</div>
-            </div>
-        `;
-    });
-}
+                if (json.success) {
+                    renderWeather(json.data);
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                } else {
+                    throw new Error("API Error");
+                }
+            } catch (e) {
+                console.error(e);
+                // 更友善的錯誤提示
+                document.getElementById('loading').style.display = 'none';
+                alert("SkyPulse 無法取得資料，請稍候再試。");
+            }
+        }
 
-/* 載入資料 */
-async function loadWeather() {
-    try {
-        const res = await fetch(API_URL);
-        const json = await res.json();
-
-        renderHero(json.current);
-        renderFuture(json.future);
-
-        document.getElementById("updateTime").innerText = "更新：" + json.current.time;
-
-        // 淡出 loading
-        setTimeout(() => {
-            document.getElementById("loading").style.opacity = 0;
-            setTimeout(() => {
-                document.getElementById("loading").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-            }, 400);
-        }, 600);
-
-    } catch (e) {
-        console.error("Weather API 錯誤：", e);
-        document.getElementById("updateTime").innerText = "更新失敗";
-    }
-}
-
-loadWeather();
-</script>
-
+        document.addEventListener('DOMContentLoaded', fetchWeather);
+    </script>
 </body>
 </html>
